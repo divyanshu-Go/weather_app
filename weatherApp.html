@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <!-- font awesome cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+</head>
+
+<style>
+    
+    *{
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+        border:none;
+        outline:none;
+        background: none;
+        text-transform: capitalize;
+        font-family: "Montserrat", sans-serif;
+    }
+    
+    .b{
+        border: 1px solid red;
+    }
+    
+    :root{
+        --bgColor:#c8e6f0;
+    }
+    
+    body{
+        width: 100vw;
+        min-height: 100vh;
+        display: grid;
+        place-items:center;
+        background-color:#cfe2e293
+    }
+    .container{
+        width: 70%;
+        height: min-content;
+        padding: 25px 30px 10px;
+        border-radius:10px;
+        background: #b3ced7;
+        box-shadow: 8px 7px 5px #5f6868
+    }
+    .search-box{
+        width: 100%;
+        height: min-content; 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .search-box .input-box{
+        width: 85%;
+        font-size: 13px;
+        text-transform: capitalize;
+        color:#212424fb;
+        background-color:var(--bgColor);
+        border-radius: 6px;
+        padding: 5px 7px;
+    }
+    .search-box .input-box::placeholder{
+        color:#212424fb;
+    }
+    .search-box button{
+        padding: 6px;
+        background-color:var(--bgColor);
+        border-radius: 50%;
+        cursor : pointer;
+    }
+    .search-box button:hover{
+        color: white;
+        background-color: #64858588;
+    }
+    .weather-body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        margin-block: 20px;
+    }
+    .weather-body img{
+        max-width: 60%;
+        
+    }
+    .weather-box{
+        margin-block: 20px;
+        text-align: center;
+    }
+    .weather-box .temperature {
+        font-size: 35px;
+        font-weight: 800;
+        position: relative;
+    }
+    .weather-box .temperature sup{
+        font-size: 16px;
+        position: absolute;
+        font-weight: 600;
+    }
+    .weather-box .description{
+        font-size: 20px;
+        font-weight: 350;
+    }
+    .weather-details{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .humidity, .wind-speed{
+        display: flex;
+        align-items: center;
+    }
+    .weather-details i{
+        font-size:30px;
+    }
+    .weather-details .text{
+        font-size: 14px;
+        margin-left: 10px
+    }
+    .text span{
+        font-weight:500;
+    }
+    .text p{
+        font-weight:300;
+        font-size: 12px
+    }
+    .locationNotFound img{
+        max-width: 60%;
+    }
+    .locationNotFound p{
+        color: #5f6868;
+        font-weight: 600
+    }
+    .locationNotFound{
+        display: none;
+        place-items: center;
+        margin : 30px 0 20px;
+    }
+    
+    
+</style>
+
+<body>
+    
+    <div class="container bd">
+        <div class="header bd">
+            <div class="search-box bd">
+                <input type="text" placeholder="enter your location" class="input-box bd"/>
+                <button class="fa-solid fa-magnifying-glass bd " id="searchBtn"></button>
+            </div>
+        </div>
+        
+        <div class="locationNotFound">
+            <p>sorry! location not found</p>
+            <img src="weatherAppAssets/404.png" alt="loction not found image">
+        </div>
+        
+        <div class="weather-body bd">
+            <img src="weatherAppAssets/cloud.png" alt="weather-img" class="weather-img">
+            
+            <div class="weather-box bd">
+               <p class="temperature bd">0<sup>°C</sup></p>
+               <p class="description">description</p>
+            </div>
+            
+            <div class="weather-details bd">
+              <div class="humidity bd">
+                    <i class="fa-solid fa-droplet"></i>
+                <div class="text">  
+                    <span>45%</span>
+                    <p>humidity</p>
+                </div>
+              </div>
+            
+            <div class="wind-speed bd">
+                    <i class="fa-solid fa-wind"></i>
+                <div class="text">  
+                    <span>12km/h</span>
+                    <p>wind speed</p>
+                </div>
+            </div>
+          </div>
+        <div>
+    </div>
+    
+    
+    
+    
+    <script>
+        
+        
+        const inputBox=
+        document.querySelector(".input-box"); 
+        const searchBtn=
+        document.getElementById("searchBtn"); 
+        const temp =
+        document.querySelector(".temperature"); 
+        const description=
+        document.querySelector(".description"); 
+        const humidity =
+        document.querySelector(".humidity .text span");   
+        const wind =
+        document.querySelector(".wind-speed .text span"); 
+        const weatherImg=
+        document.querySelector(".weather-img");      
+        const locationNotFound=
+        document.querySelector(".locationNotFound"); 
+        const weatherBody=
+        document.querySelector(".weather-body"); 
+        
+        
+        async function getWeatherData(city) {
+            const api_key="2d4c2a80f3a41cb0a102cc9f868b10c1";
+            
+            const url= `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}`
+            const response= await fetch(`${url}`)
+            const data= await response.json()
+            
+            
+            if(data.cod === '404') {
+                locationNotFound.style.display = 'grid'
+                weatherBody.style.display= 'none'
+                return;
+            }
+            
+            weatherBody.style.display='flex'
+            locationNotFound.style.display = 'none' 
+            temp.innerHTML=
+            `${Math.round(data.main.temp - 273.15)}<sup>°C</sup>`
+            description.innerText= 
+            `${data.weather[0].description}`
+            
+            humidity.innerText= 
+            `${data.main.humidity}%`
+            
+            wind.innerText= 
+            `${data.wind.speed}km/h`
+            
+            
+            switch(data.weather[0].main){
+                     
+                case "Clouds":
+                    weatherImg.src='weatherAppAssets/cloud.png'
+                    break;
+                case "Clear":
+                    weatherImg.src='weatherAppAssets/clear.png'
+                    break;
+                case "Mist":
+                    weatherImg.src='weatherAppAssets/mist.png'
+                    break;
+                case "Rain":
+                    weatherImg.src='weatherAppAssets/rain.png'
+                    break;
+                case "Snow":
+                    weatherImg.src='weatherAppAssets/snow.png'
+                    break;
+                default :
+                    weatherImg.src='weatherAppAssets/404.png'
+            }
+          
+        }
+        
+        
+        searchBtn.addEventListener('click' , function() {
+            getWeatherData(inputBox.value);
+        })
+        
+        
+        
+    </script>
+</body>
+</html>
